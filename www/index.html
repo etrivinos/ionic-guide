@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+
+    <!-- compiled css output -->
+    <link href="css/ionic.app.css" rel="stylesheet">
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+  </head>
+  <body ng-app="todo" ng-controller="TodoCtrl">
+
+    <ion-side-menus>
+      <!-- Center Content -->
+      <ion-side-menu-content>
+        <ion-header-bar class="bar-dark">
+          
+          <!-- Toggle Projects -->
+          <button class="button button-icon" ng-click="toggleProjects()">
+            <i class="icon ion-navicon"></i>
+          </button>
+
+          <h1 class="title">{{activeProject.title}}</h1>
+
+          <!-- New task button -->
+          <button class="button button-icon" ng-click="newTask()">
+            <i class="icon ion-compose"></i>
+          </button>
+        </ion-header-bar>
+        
+        <ion-content scroll="false">
+          
+          <!-- Our list and list items -->
+          <ion-list>
+            <ion-item ng-repeat="task in activeProject.tasks">
+              {{task.title}}
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-side-menu-content>
+      
+      <!-- Left Menu -->
+      <ion-side-menu side="left">
+        <ion-header-bar class="bar-dark">
+          <h1 class="title">Projects</h1>
+
+          <!-- New Project -->
+          <button class="button button-icon ion-plus" ng-click="newProject()"></button>
+        </ion-header-bar>
+        
+        <ion-content scroll="false">
+          <ion-item ng-repeat="project in projects" 
+            ng-click="selectProject(project, $index)"
+            ng-class="{active: activeProject == project}">
+              {{project.title}}
+          </ion-item>
+        </ion-content>
+      </ion-side-menu>
+      
+    </ion-side-menus>
+
+    <!-- Modal -->
+    <script id="new-task.html" type="text/ng-template">
+      <div class="modal">
+        <!-- Modal Header Bar -->
+        <ion-header-bar class="bar-secondary">
+          <h1 class="title">New Task</h1>
+          <button class="button button-clear button-positive" ng-click="closeNewTask()">Cancel</button>
+        </ion-header-bar>
+
+        <!-- Modal Content Area -->
+        <ion-content>
+          <form ng-submit="createTask(task)">
+            <div class="list">
+              <label class="item item-input">
+                <input type="text" placeholder="What do you need to do?" ng-model="task.title">
+              </label>
+            </div>
+
+            <div class="padding">
+              <button type="submit" class="button button-block button-positive">Create Task</button>
+            </div>
+          </form>
+        </ion-content>
+      </div>
+    </script>
+  </body>
+</html>
