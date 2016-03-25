@@ -1,5 +1,10 @@
 
 angular.module('todo', ['ionic'])
+  .run(function($ionicPlatform) {
+    $ionicPlatform.ready(function() {
+      //Anything native should go here, like StatusBar.styleLightContent()
+    });
+  })
   /**
   * The Projects factory handles saving and loading projects
   * from local storage, and also lets us save and load the 
